@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
-require('dotenv').config();
 
 const connectDB = async () => {
     try {
-        await mongoose.connect("mongodb://localhost:27017/yearbook");
+        await mongoose.connect(
+            "mongodb://mongodb2005:sac2026@mongodb:27017/yearbook?authSource=admin"
+        );
         console.log("MongoDB connection SUCCESS");
     } catch (error) {
         console.error(error);
