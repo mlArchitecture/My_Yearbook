@@ -8,7 +8,11 @@ services:
       - "5000:5000"
     networks:
       - app-network
-    
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URI=mongodb://mongodb2005:sac2026@mongodb:27017/yearbook?authSource=admin
+
   frontend:
     build:
       context: ./frontend
@@ -19,6 +23,22 @@ services:
     depends_on:
       - backend
 
+  mongodb:
+    image: mongodb/mongodb-community-server:latest
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+    volumes:
+      - mongodb:/data/db
+    environment:
+      MONGODB_INITDB_ROOT_USERNAME: mongodb2005
+      MONGODB_INITDB_ROOT_PASSWORD: "sac2026"
+
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  mongodb:
